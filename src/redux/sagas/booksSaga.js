@@ -2,7 +2,6 @@ import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { nytimes } from "./nytimes";
 
 function getBooksApi(category) {
-  console.log(category);
   return fetch(
     `${nytimes.base_url}/svc/books/v3/lists/current/${category}.json?api-key=${nytimes.api_key}`
   )

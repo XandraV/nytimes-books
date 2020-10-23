@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import { Col, Container, Row, Tab, Tabs } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import styled from "styled-components/macro";
 import BooksTable from "./BooksTable";
 import RankingChart from "./RankingChart";
 import ReviweSearch from "./ReviewSearch";
 import PageWrapper from "./PageWrapper";
 import Logo from "./Logo";
+
 const categories = [
   { title: "Fiction", category: "hardcover-fiction" },
   { title: "Non-Fiction", category: "hardcover-nonfiction" },
-  { title: "Fashion", category: "fashion-manners-and-customs" },
-  { title: "Science", category: "science" },
 ];
 
 function App() {
@@ -36,10 +33,12 @@ function App() {
           >
             <Container className="m-3">
               <Row>
-                <Col><BooksTable category={categories.find(c=> c.title === key).category} /></Col>
+                <Col>
+                <BooksTable category={categories.find(c=> c.title === key).category} />
+                </Col>
                 <Col>
                   <Row>
-                    {/* <ReviweSearch /> */}
+                    <ReviweSearch category="lol"/>
                   </Row>
                   <Row>
                     <RankingChart />
