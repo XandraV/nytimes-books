@@ -10,7 +10,7 @@ import {
   InputGroup,
   Row,
 } from "react-bootstrap";
-import { nytimes } from "./nytimes";
+import { nytimes } from "./redux/sagas/nytimes";
 import styled from "styled-components/macro";
 
 const DropdownWrapper = styled.span`
@@ -27,7 +27,7 @@ function ReviewSearch() {
 
   useEffect(() => {
     fetch(
-      `${nytimes.base_url}/svc/books/v3/reviews.json?author=Jane%20Austen&api-key=${nytimes.api_key}`
+      `https://api.nytimes.com/svc/books/v3/reviews.json?author=Jane%20Austen&api-key=EPQfG6lAOJgoKSMq58JMRxSHooAQynA4`
     )
       .then((res) => res.json())
       .then((data) => {
