@@ -13,7 +13,7 @@ const categories = [
 
 function App() {
   const [key, setKey] = useState("Fiction");
-  
+
   return (
     <PageWrapper>
       <Logo />
@@ -34,11 +34,13 @@ function App() {
             <Container className="m-3">
               <Row>
                 <Col>
-                <BooksTable category={categories.find(c=> c.title === key).category} />
+                  <BooksTable
+                    category={categories.find((c) => c.title === key).category}
+                  />
                 </Col>
                 <Col>
                   <Row>
-                    <ReviweSearch category="lol"/>
+                    <ReviweSearch />
                   </Row>
                   <Row>
                     <RankingChart />

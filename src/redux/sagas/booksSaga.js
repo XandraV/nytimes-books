@@ -1,7 +1,7 @@
-import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import { nytimes } from "./nytimes";
 
-function getBooksApi(category) {
+export function getBooksApi(category) {
   return fetch(
     `${nytimes.base_url}/svc/books/v3/lists/current/${category}.json?api-key=${nytimes.api_key}`
   )
@@ -12,7 +12,7 @@ function getBooksApi(category) {
     });
 }
 
-function* fetchBooks(action) {
+export function* fetchBooks(action) {
   try {
     const books = yield call(getBooksApi, action.payload.category);
     yield put({ type: "GET_BOOKS_SUCCESS", books: books });
@@ -22,7 +22,7 @@ function* fetchBooks(action) {
 }
 
 function* booksSaga() {
-  yield takeLatest("GET_BOOKS_REQUESTED", fetchBooks);
+  yield takeEvery("GET_BOOKS_REQUESTED", fetchBooks);
 }
 
 export default booksSaga;

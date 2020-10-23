@@ -12,7 +12,6 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getReviews } from "./redux/actions/reviews";
-import { nytimes } from "./redux/sagas/nytimes";
 import styled from "styled-components/macro";
 
 const DropdownWrapper = styled.span`
@@ -48,13 +47,7 @@ function ReviewSearch() {
   return (
     <Container>
       <Row>
-        <h6
-          style={{ fontWeight: "bold", display: "inline-block" }}
-          className="ml-2 mt-1 mr-2"
-        >
-          Book Reviews
-        </h6>
-
+        <h6 className="ml-2 mt-1 mr-2 font-weight-bold">Book Reviews</h6>
         <InputGroup
           as="span"
           size="sm"
@@ -100,19 +93,15 @@ function ReviewSearch() {
           {reviews.length > 0 &&
             !loading &&
             reviews.slice(0, 2).map((rev, idx) => (
-              <Row
-                key={idx}
-                className="mb-2 border-bottom pb-2"
-                style={{ textAlign: "left" }}
-              >
+              <Row key={idx} className="mb-2 border-bottom pb-2 text-left">
                 <Col>
                   <h5>{rev.book_title}</h5>
                   <span>by {rev.book_author}</span>
                   <Button
+                    className="float-right"
                     variant="outline-warning"
                     href={rev.url}
                     target="_blank"
-                    style={{ float: "right" }}
                     size="sm"
                   >
                     Go to Review

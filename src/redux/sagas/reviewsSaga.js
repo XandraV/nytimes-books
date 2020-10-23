@@ -1,9 +1,9 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { nytimes } from "./nytimes";
 
-function getReviewsApi(data) {
+export function getReviewsApi(data) {
   return fetch(
-    `https://api.nytimes.com/svc/books/v3/reviews.json?${data.filter}=${data.word}&api-key=EPQfG6lAOJgoKSMq58JMRxSHooAQynA4`
+    `${nytimes.base_url}/svc/books/v3/reviews.json?${data.filter}=${data.word}&api-key=${nytimes.api_key}`
   )
     .then((response) => response.json())
     .then((data) => data["results"])
@@ -12,7 +12,7 @@ function getReviewsApi(data) {
     });
 }
 
-function* fetchReviews(action) {
+export function* fetchReviews(action) {
   try {
     const reviews = yield call(getReviewsApi, action.payload);
     yield put({ type: "GET_REVIEWS_SUCCESS", reviews: reviews });

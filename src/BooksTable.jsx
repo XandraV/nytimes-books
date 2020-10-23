@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getBooks } from "./redux/actions/books";
 import { Table } from "react-bootstrap";
@@ -22,7 +22,7 @@ function BooksTable({ category }) {
           borderless
           hover
           size="sm"
-          style={{ textAlign: "center" }}
+          className="text-center"
         >
           <thead>
             <tr>
