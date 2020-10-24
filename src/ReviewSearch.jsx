@@ -47,7 +47,7 @@ function ReviewSearch() {
   return (
     <Container>
       <Row>
-        <h6 className="ml-2 mt-1 mr-2 font-weight-bold">Book Reviews</h6>
+        <b className="ml-2 mt-1 mr-2">Book Reviews</b>
         <InputGroup
           as="span"
           size="sm"

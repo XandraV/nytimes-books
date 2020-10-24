@@ -1,9 +1,8 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { nytimes } from "./nytimes";
 
 export function getReviewsApi(data) {
   return fetch(
-    `${nytimes.base_url}/svc/books/v3/reviews.json?${data.filter}=${data.word}&api-key=${nytimes.api_key}`
+    `${process.env.REACT_APP_NYTIMES_BASE_URL}/svc/books/v3/reviews.json?${data.filter}=${data.word}&api-key=${process.env.REACT_APP_NYTIMES_API_KEY}`
   )
     .then((response) => response.json())
     .then((data) => data["results"])
