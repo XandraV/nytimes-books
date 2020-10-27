@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getBooks } from "./redux/actions/books";
 import { Table } from "react-bootstrap";
-
+import chroma from "chroma-js";
+const color = chroma
+  .scale(["#f6b7a2", "#ddacca", "#b9a6e8", "#86a1ff"])
+  .domain([10, 0]);
 function BooksTable({ category }) {
   const dispatch = useDispatch();
   const books = useSelector((state) => state.books.books);
@@ -23,6 +26,11 @@ function BooksTable({ category }) {
           hover
           size="sm"
           className="text-center"
+          style={{
+            borderCollapse: "separate",
+            borderSpacing: " 0 4px",
+            width: "600px",
+          }}
         >
           <thead>
             <tr>
@@ -33,11 +41,11 @@ function BooksTable({ category }) {
             </tr>
           </thead>
           <tbody>
-            {books.slice(0, 10).map((book) => (
-              <tr key={book.title}>
-                <td>{book.rank}</td>
+            {books.slice(0, 10).map((book, idx) => (
+              <tr key={book.title} style={{ backgroundColor: color(idx) }}>
+                <td>#{book.rank}</td>
                 <td>
-                  <img alt="" height={30} src={book.book_image} />
+                  <img alt="" height={20} src={book.book_image} />
                 </td>
                 <td>{book.author}</td>
                 <td>

@@ -9,6 +9,7 @@ import Logo from "./Logo";
 const categories = [
   { title: "Fiction", category: "hardcover-fiction" },
   { title: "Non-Fiction", category: "hardcover-nonfiction" },
+  { title: "Reviews", category: "reviews" },
 ];
 
 function App() {
@@ -31,22 +32,25 @@ function App() {
             eventKey={cat.title}
             title={cat.title}
           >
-            <Container className="m-3">
-              <Row>
-                <Col>
-                  <BooksTable
-                    category={categories.find((c) => c.title === key).category}
-                  />
-                </Col>
-                <Col>
-                  <Row>
-                    <ReviweSearch />
-                  </Row>
-                  <Row>
+            <Container className="m-1">
+              {key !== "Reviews" ? (
+                <Row>
+                  <Col>
+                    <BooksTable
+                      category={
+                        categories.find((c) => c.title === key).category
+                      }
+                    />
+                  </Col>
+                  <Col className="p-0">
                     <RankingChart />
-                  </Row>
-                </Col>
-              </Row>
+                  </Col>
+                </Row>
+              ) : (
+                <Row>
+                  <ReviweSearch />
+                </Row>
+              )}
             </Container>
           </Tab>
         ))}

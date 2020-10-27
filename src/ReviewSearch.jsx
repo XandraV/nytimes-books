@@ -85,7 +85,7 @@ function ReviewSearch() {
         </InputGroup>
       </Row>
       <Row>
-        <Container className="mt-3 mb-1" style={{ height: "150px" }}>
+        <Container className="mt-1 mb-1" style={{ height: "150px" }}>
           {loading && <p>Loading...</p>}
           {reviews.length === 0 &&
             !loading &&
@@ -93,7 +93,7 @@ function ReviewSearch() {
           {reviews.length > 0 &&
             !loading &&
             reviews.slice(0, 2).map((rev, idx) => (
-              <Row key={idx} className="mb-2 border-bottom pb-2 text-left">
+              <Row key={idx} className="mb-2 pb-2 text-left">
                 <Col>
                   <h5>{rev.book_title}</h5>
                   <span>by {rev.book_author}</span>
