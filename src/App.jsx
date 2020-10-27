@@ -8,7 +8,6 @@ import Logo from "./Logo";
 
 const categories = [
   { title: "Fiction", category: "hardcover-fiction" },
-  { title: "Non-Fiction", category: "hardcover-nonfiction" },
   { title: "Reviews", category: "reviews" },
 ];
 

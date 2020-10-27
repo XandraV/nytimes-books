@@ -3,8 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getBooks } from "./redux/actions/books";
 import { Table } from "react-bootstrap";
 import chroma from "chroma-js";
+// const color = chroma
+//   .scale(["#c3dbba", "#ffd1a1", "#f08080"])
+//   .domain([10, 0]);
 const color = chroma
-  .scale(["#f6b7a2", "#ddacca", "#b9a6e8", "#86a1ff"])
+  .scale(["#f08080","#c3dbba", "#ffd1a1"])
   .domain([10, 0]);
 function BooksTable({ category }) {
   const dispatch = useDispatch();
@@ -56,7 +59,6 @@ function BooksTable({ category }) {
           </tbody>
         </Table>
       )}
-      {error && !loading && <p>{error}</p>}
     </>
   );
 }
