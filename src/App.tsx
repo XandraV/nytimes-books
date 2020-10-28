@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Col, Container, Row, Tab, Tabs } from "react-bootstrap";
 import BooksTable from "./BooksTable";
 import RankingChart from "./RankingChart";
-import ReviweSearch from "./ReviewSearch";
+import ReviewsTab from "./ReviewsTab";
 import PageWrapper from "./PageWrapper";
 import Logo from "./Logo";
 
@@ -13,7 +13,6 @@ const categories = [
 
 function App() {
   const [key, setKey] = useState<string | null>("Fiction");
-
   return (
     <PageWrapper>
       <Logo />
@@ -30,6 +29,10 @@ function App() {
             className="p-1"
             eventKey={cat.title}
             title={cat.title}
+            style={{
+              background: "#fde8d1",
+              textAlign: `${cat.title === "Reviews" ? "-webkit-center" : ""}`,
+            }}
           >
             <Container className="m-1">
               {key !== "Reviews" ? (
@@ -49,7 +52,7 @@ function App() {
                 </Row>
               ) : (
                 <Row>
-                  <ReviweSearch />
+                  <ReviewsTab />
                 </Row>
               )}
             </Container>

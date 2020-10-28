@@ -8,7 +8,7 @@ import {
 describe("reviews reducer", () => {
   it("should return the initial state", () => {
     expect(reviews(undefined, {})).toEqual({
-      reviews: [],
+      reviews: [""],
       loading: false,
       error: null,
     });

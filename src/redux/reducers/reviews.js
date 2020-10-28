@@ -1,7 +1,7 @@
 import * as type from "./types";
 
 const initialState = {
-  reviews: [],
+  reviews: [""],
   loading: false,
   error: null,
 };

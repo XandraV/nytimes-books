@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getReviews } from "./redux/actions/reviews";
 import styled from "styled-components/macro";
 import ReviewItem from "./ReviewItem";
+import { reviewsJaneAusten, reviewsJKRowling } from "./ReviewsDeafultData";
 
 const DropdownWrapper = styled.span`
   button {
@@ -21,33 +22,6 @@ const DropdownWrapper = styled.span`
     border-color: #fbb06f;
   }
 `;
-
-const reviewsJaneAusten = [
-  {
-    book_title: "Novels",
-    byline: "MIRANDA SEYMOUR",
-    url:
-      "http://query.nytimes.com/gst/fullpage.html?res=9D00EED91E3CF931A25755C0A9679D8B63",
-  },
-  {
-    book_title: "Sense",
-    byline: "MARC TRACY",
-    url:
-      "http://query.nytimes.com/gst/fullpage.html?res=9C07E1DA1231F93BA15751C0A9669D8B63",
-  },
-  {
-    book_title: "Northanger Abbey",
-    byline: "JO BAKER",
-    url:
-      "http://www.nytimes.com/2014/06/15/books/review/val-mcdermids-northanger-abbey.html",
-  },
-  {
-    book_title: "Mansfield Park",
-    byline: "BARBARA KANTROWITZ",
-    url:
-      "http://www.nytimes.com/1999/10/31/movies/film-making-an-austen-heroine-more-like-austen.html",
-  },
-];
 
 interface RootState {
   reviews: {
@@ -57,7 +31,7 @@ interface RootState {
   };
 }
 
-const ReviewSearch = () => {
+const ReviewsTab = () => {
   const [word, setWord] = useState("");
   const [filter, setFilter] = useState<string | null>("Please select");
 
@@ -73,14 +47,22 @@ const ReviewSearch = () => {
   const handleSelectFilter = (fltr: string) => {
     setFilter(fltr);
   };
-
+  console.log(reviews);
   return (
     <Container style={{ display: "contents" }}>
-      <Col sm={5}>
+      <Col className="mr-3" sm={5}>
         <b>Jane Austen</b>
-        <Row>
-          <Container className="mt-1 mb-1" style={{ height: "150px" }}>
+        <Row className="ml-0">
+          <Container className="mt-1 mb-1">
             {reviewsJaneAusten.map((review, idx) => (
+              <ReviewItem key={`static-revs-${idx}`} item={review} />
+            ))}
+          </Container>
+        </Row>
+        <b>J. K. Rowling</b>
+        <Row className="ml-0">
+          <Container className="mt-1 mb-1">
+            {reviewsJKRowling.map((review, idx) => (
               <ReviewItem key={`static-revs-${idx}`} item={review} />
             ))}
           </Container>
@@ -115,7 +97,7 @@ const ReviewSearch = () => {
                 as={ButtonGroup}
                 variant={"warning"}
                 title={filter}
-                onSelect={(f:any) => handleSelectFilter(f)}
+                onSelect={(f: any) => handleSelectFilter(f)}
               >
                 <Dropdown.Item eventKey="title">title</Dropdown.Item>
                 <Dropdown.Item eventKey="author">author</Dropdown.Item>
@@ -125,19 +107,22 @@ const ReviewSearch = () => {
           </InputGroup>
         </Row>
         <Row>
-          <Container className="mt-1 mb-1" style={{ height: "150px" }}>
-            {loading && <p>Loading...</p>}
-            {reviews.length === 0 &&
-              !loading &&
-              `Your search did not match any reviews.`}
-            {reviews[0] === "" && !loading
-              ? `Type a title, author or isbn to search for reviews.`
-              : reviews.length > 0 &&
+          <Container className="mt-1 mb-1">
+            <p className="m-5">
+              {loading && <p>Loading...</p>}
+              {reviews.length === 0 &&
+                reviews[0] !== "" &&
                 !loading &&
-                reviews.map((review: object | string, idx: number) => (
-                  <ReviewItem key={idx} item={review} />
-                ))}
-            {error && !loading && <p>{error}</p>}
+                `Your search did not match any reviews.`}
+              {reviews[0] === "" && !loading
+                ? `Type a title, author or isbn to search for reviews.`
+                : reviews.length > 0 &&
+                  !loading &&
+                  reviews.map((review: object | string, idx: number) => (
+                    <ReviewItem key={idx} item={review} />
+                  ))}
+              {error && !loading && <p>{error}</p>}
+            </p>
           </Container>
         </Row>
       </Col>
@@ -145,4 +130,4 @@ const ReviewSearch = () => {
   );
 };
 
-export default ReviewSearch;
+export default ReviewsTab;

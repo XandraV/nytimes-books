@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 
-type TooltipProps = {
-  hoveredPoint: { book: { title: string; rank: string; rankLastWeek: string } };
+type ChartInfoProps = {
+  hoveredPoint: { title: string; rank: number; rankLastWeek: number, weeksOnList: number; };
 };
 
-const Tooltip: FC<TooltipProps> = ({ hoveredPoint }) => {
+const ChartInfo: FC<ChartInfoProps> = ({ hoveredPoint }) => {
   return (
     <g transform={`translate(250,-50)`}>
       <text
@@ -15,7 +15,7 @@ const Tooltip: FC<TooltipProps> = ({ hoveredPoint }) => {
           fill: "grey",
         }}
       >
-        {hoveredPoint.book.title}
+        {hoveredPoint.title}
       </text>
       <text
         style={{
@@ -25,7 +25,7 @@ const Tooltip: FC<TooltipProps> = ({ hoveredPoint }) => {
           fill: "grey",
         }}
       >
-        {`#${hoveredPoint.book.rank} this week`}
+        {`#${hoveredPoint.rank} this week`}
       </text>
       <text
         style={{
@@ -35,10 +35,10 @@ const Tooltip: FC<TooltipProps> = ({ hoveredPoint }) => {
           fill: "grey",
         }}
       >
-        {`#${hoveredPoint.book.rankLastWeek} last week`}
+        {`#${hoveredPoint.rankLastWeek} last week`}
       </text>
     </g>
   );
 };
 
-export default Tooltip;
+export default ChartInfo;
