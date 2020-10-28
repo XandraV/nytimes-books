@@ -1,6 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 
-const StyledTooltip = ({ hoveredPoint }) => {
+type TooltipProps = {
+  hoveredPoint: { book: { title: string; rank: string; rankLastWeek: string } };
+};
+
+const Tooltip: FC<TooltipProps> = ({ hoveredPoint }) => {
   return (
     <g transform={`translate(250,-50)`}>
       <text
@@ -37,4 +41,4 @@ const StyledTooltip = ({ hoveredPoint }) => {
   );
 };
 
-export default StyledTooltip;
+export default Tooltip;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import styled from "styled-components/macro";
 const StyledPageWrapper = styled.div`
   text-align: center;
@@ -17,7 +17,7 @@ const StyledPageWrapper = styled.div`
   }
 `;
 
-const PageWrapper = (props) => (
-  <StyledPageWrapper>{props.children}</StyledPageWrapper>
+const PageWrapper: FC = ({ children }) => (
+  <StyledPageWrapper>{children}</StyledPageWrapper>
 );
 export default PageWrapper;

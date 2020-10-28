@@ -1,19 +1,22 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getBooks } from "./redux/actions/books";
 import { Table } from "react-bootstrap";
 import chroma from "chroma-js";
-// const color = chroma
-//   .scale(["#c3dbba", "#ffd1a1", "#f08080"])
-//   .domain([10, 0]);
-const color = chroma
-  .scale(["#f08080","#c3dbba", "#ffd1a1"])
-  .domain([10, 0]);
-function BooksTable({ category }) {
+
+const color = chroma.scale(["#f08080", "#c3dbba", "#ffd1a1"]).domain([10, 0]);
+
+type BooksTableProps = {
+  category: string;
+};
+interface RootState {
+  books: { books: Array<object>; loading: boolean; error: { message: string } };
+}
+
+const BooksTable: FC<BooksTableProps> = ({ category }) => {
   const dispatch = useDispatch();
-  const books = useSelector((state) => state.books.books);
-  const loading = useSelector((state) => state.books.loading);
-  const error = useSelector((state) => state.books.error);
+  const books = useSelector((state: RootState) => state.books.books);
+  const loading = useSelector((state: RootState) => state.books.loading);
 
   useEffect(() => {
     dispatch(getBooks(category));
@@ -44,8 +47,8 @@ function BooksTable({ category }) {
             </tr>
           </thead>
           <tbody>
-            {books.slice(0, 10).map((book, idx) => (
-              <tr key={book.title} style={{ backgroundColor: color(idx) }}>
+            {books.slice(0, 10).map((book: any, idx) => (
+              <tr key={book.title} style={{ backgroundColor: `${color(idx)}` }}>
                 <td>#{book.rank}</td>
                 <td>
                   <img alt="" height={20} src={book.book_image} />
@@ -61,6 +64,6 @@ function BooksTable({ category }) {
       )}
     </>
   );
-}
+};
 
 export default BooksTable;

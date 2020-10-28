@@ -12,7 +12,7 @@ const categories = [
 ];
 
 function App() {
-  const [key, setKey] = useState("Fiction");
+  const [key, setKey] = useState<string | null>("Fiction");
 
   return (
     <PageWrapper>
@@ -37,7 +37,9 @@ function App() {
                   <Col>
                     <BooksTable
                       category={
-                        categories.find((c) => c.title === key).category
+                        (categories as any).find(
+                          (c: { title: string }) => c.title === key
+                        ).category
                       }
                     />
                   </Col>

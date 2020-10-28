@@ -1,26 +1,37 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { useSelector } from "react-redux";
 import { Col, Row } from "react-bootstrap";
 import * as d3 from "d3";
 import chroma from "chroma-js";
-import StyledTooltip from "./StyledTooltip";
+import Tooltip from "./Tooltip";
 
 const svgHeight = 390;
 const svgWidth = 500;
 
-// const color = chroma.scale(["#c3dbba", "#ffd1a1", "#f08080"]).domain([0, 10]);
-const color = chroma.scale(["#f08080","#c3dbba", "#ffd1a1"]).domain([0, 10]);
+const color = chroma.scale(["#f08080", "#c3dbba", "#ffd1a1"]).domain([0, 10]);
 const xScale = d3
   .scaleLinear()
   .domain([0, 11])
   .range([20, svgWidth / 2]);
 const yScale = d3.scaleLinear().domain([0, 10]).range([svgHeight, 0]);
 
-function RankingChart() {
+interface RootState {
+  books: {
+    books: Array<{
+      title: string;
+      rank: number;
+      rank_last_week: number;
+      weeks_on_list: number;
+    }>;
+    loading: boolean;
+    error: { message: string };
+  };
+}
+const RankingChart: FC = () => {
   const [hoveredPoint, setHoveredPoint] = useState(null);
-  const loading = useSelector((state) => state.books.loading);
-  const books = useSelector((state) => state.books.books);
-  const error = useSelector((state) => state.books.error);
+  const loading = useSelector((state: RootState) => state.books.loading);
+  const books = useSelector((state: RootState) => state.books.books);
+  const error = useSelector((state: RootState) => state.books.error);
 
   const chartData = books.slice(0, 10).map((book) => {
     return {
@@ -28,10 +39,9 @@ function RankingChart() {
       rank: book.rank,
       rankLastWeek: book.rank_last_week,
       weeksOnList: book.weeks_on_list,
-      image: book.book_image,
     };
   });
-  console.log(hoveredPoint);
+
   return (
     <div className="pt-2">
       <Row>
@@ -62,18 +72,19 @@ function RankingChart() {
               <g key={`group-${idx}`}>
                 <g
                   key={`current-${idx}`}
-                  transform={`translate(-10,${yScale(idx) + 5})`}
+                  transform={`translate(-10,${yScale(idx)! + 5})`}
                   onMouseOver={() =>
                     setHoveredPoint({
                       idx: idx,
                       x: xScale(book["rank"]),
                       y: yScale(idx),
                       book: chartData[chartData.length - idx - 1],
-                    })
+                    } as any)
                   }
                   onMouseLeave={() => setHoveredPoint(null)}
                 >
-                  {hoveredPoint && hoveredPoint.idx === idx && (
+                  {hoveredPoint && (hoveredPoint as any).idx === idx && (
+                    // background shadow/highlight for hovered row
                     <rect
                       transform={`translate(0, -45)`}
                       width={630}
@@ -84,16 +95,17 @@ function RankingChart() {
                     />
                   )}
 
-                  {hoveredPoint && hoveredPoint.idx === idx && (
-                    <StyledTooltip hoveredPoint={hoveredPoint} />
+                  {hoveredPoint && (hoveredPoint as any).idx === idx && (
+                    <Tooltip hoveredPoint={hoveredPoint as any} />
                   )}
 
                   {new Array(book.weeksOnList).fill(0).map((z, idx2) => (
+                    // visualisation of weeks on list, right side of the chart
                     <rect
                       transform={`translate(${600 - idx2 * 12}, -30)`}
                       width={10}
                       height={20}
-                      fill={color(idx)}
+                      fill={`${color(idx)}`}
                       rx={3}
                       ry={3}
                     />
@@ -119,16 +131,16 @@ function RankingChart() {
                       -10,
                       "Z",
                     ].join(" ")}
-                    fill={color(idx)}
-                    stroke={color(idx)}
+                    fill={`${color(idx)}`}
+                    stroke={`${color(idx)}`}
                     strokeWidth="0.1rem"
                   />
                   <circle
                     key={`current-point-${idx}`}
                     cx={xScale(book["rank"])}
-                    cy={-30}
+                    cy={-35}
                     r={8}
-                    fill={color(idx).saturate(2)}
+                    fill={`${(color(idx) as any).saturate(2)}`}
                     opacity={0.5}
                   />
                   <circle
@@ -136,46 +148,18 @@ function RankingChart() {
                     cx={xScale(book["rankLastWeek"])}
                     cy={-10}
                     r={4}
-                    fill={color(idx).saturate(2)}
+                    fill={`${(color(idx) as any).saturate(2)}`}
                     opacity={0.5}
                   />
-                  {/* <text
-                  key={idx}
-                  style={{
-                    fontSize: "0.7rem",
-                    textAnchor: "end",
-                    transform: "translateY(-20px)",
-                    fill: "grey",
-                  }}
-                >
-                  T
-                </text> */}
-                </g>
-                <g
-                  key={`previous-${idx}`}
-                  transform={`translate(-10,${yScale(idx)})`}
-                >
-                  {/* <text
-                  key={idx}
-                  style={{
-                    fontSize: "0.7rem",
-                    textAnchor: "end",
-                    transform: "translateY(0px)",
-                    fill: "grey",
-                  }}
-                >
-                  L
-                </text> */}
                 </g>
               </g>
             );
           })}
-          {/* <circle cx={30} cy={0} r={10} fill={"black"} /> */}
         </svg>
       )}
       {error && error.message}
     </div>
   );
-}
+};
 
 export default RankingChart;
