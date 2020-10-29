@@ -12,7 +12,7 @@
 ![bootstrap](https://img.shields.io/badge/-Bootstrap-563D7C?style=flat-square&logo=bootstrap&logoColor=white)
 
 
-A **React - Redux - TypeScript** application that visualises best selling fiction books and allows the user to search for reviews. This project is using the [The New York Times public APIs](https://developer.nytimes.com/) to access data on best selling books and reviews.
+A **React - Redux - TypeScript** application that visualises best selling fiction books and allows the user to search for reviews. This project is using [The New York Times public APIs](https://developer.nytimes.com/) to access data on best selling books and reviews.
 
 You can visit the deployed app [here](https://master.d26wt54fp9urnn.amplifyapp.com/).
 
