@@ -46,35 +46,73 @@ const RankingChartRow: FC<RankingChartRowProps> = ({
       onClick={() => handleClick()}
     >
       {clicked && (
-        <>
-          // background shadow/highlight for hovered row
-          <rect
-            transform={`translate(0, -45)`}
-            width={630}
-            height={50}
-            fill={"#fff2d2"}
-            rx={3}
-            ry={3}
-          />
-          // info text in the middle of the chart on hover
-          <ChartInfo hoveredPoint={book} />
-        </>
+        <rect
+          transform={`translate(0, -45)`}
+          width={630}
+          height={50}
+          fill={"#fff2d2"}
+          rx={3}
+          ry={3}
+        />
+      )}
+      {clicked && <ChartInfo hoveredPoint={book} />}
+
+      {hovered && (
+        // background shadow/highlight for hovered row
+        <rect
+          transform={`translate(0, -45)`}
+          width={630}
+          height={50}
+          fill={"#fff2d2"}
+          rx={3}
+          ry={3}
+        />
       )}
       {hovered && (
-        <>
-          // background shadow/highlight for hovered row
-          <rect
-            transform={`translate(0, -45)`}
-            width={630}
-            height={50}
-            fill={"#fff2d2"}
-            rx={3}
-            ry={3}
-          />
-          // info text in the middle of the chart on hover
-          <ChartInfo hoveredPoint={book} />
-        </>
+        // info text in the middle of the chart on hover
+        <ChartInfo hoveredPoint={book} />
       )}
+
+      <path
+        d={[
+          "M",
+          20,
+          -35,
+          "L",
+          xScale(book["rank"]),
+          -35,
+          "C",
+          xScale(book["rank"]),
+          change ? -20 : -15,
+          change ? xScale(book["rank"]) : xScale(book["rank"] * 1.2),
+          change ? -30 : -25,
+          xScale(book["rankLastWeek"] > 10 ? 10 : book["rankLastWeek"]),
+          -10,
+          "L",
+          20,
+          -10,
+          "Z",
+        ].join(" ")}
+        fill={`${color(idx + 1)}`}
+        stroke={`${color(idx + 1)}`}
+        strokeWidth="0.1rem"
+      />
+      <circle
+        key={`current-point-${idx + 1}`}
+        cx={xScale(book["rank"])}
+        cy={-35}
+        r={8}
+        fill={`${(color(idx + 1) as any).saturate(2)}`}
+        opacity={0.5}
+      />
+      <circle
+        key={`previous-point-${idx + 1}`}
+        cx={xScale(book["rankLastWeek"] > 10 ? 10 : book["rankLastWeek"])}
+        cy={-10}
+        r={4}
+        fill={`${(color(idx + 1) as any).saturate(2)}`}
+        opacity={0.5}
+      />
       {new Array(book.weeksOnList).fill(0).map((z, idx2) => (
         // visualisation of weeks on list, right side of the chart
         <rect
@@ -87,47 +125,6 @@ const RankingChartRow: FC<RankingChartRowProps> = ({
           ry={3}
         />
       ))}
-      // shape for the rank of individual books
-      <path
-        d={[
-          "M",
-          20,
-          -35,
-          "L",
-          xScale(book["rank"]),
-          -35,
-          "C",
-          xScale(book["rank"]),
-          change ? -20 : -15,
-          change ? xScale(book["rank"]) : xScale(book["rank"]*1.2),
-          change ? -30 : -25,
-          xScale(book["rankLastWeek"] > 10 ? 10 : book["rankLastWeek"]),
-          -10,
-          "L",
-          20,
-          -10,
-          "Z",
-        ].join(" ")}
-        fill={`${color(idx+1)}`}
-        stroke={`${color(idx+1)}`}
-        strokeWidth="0.1rem"
-      />
-      <circle
-        key={`current-point-${idx+1}`}
-        cx={xScale(book["rank"])}
-        cy={-35}
-        r={8}
-        fill={`${(color(idx+1) as any).saturate(2)}`}
-        opacity={0.5}
-      />
-      <circle
-        key={`previous-point-${idx+1}`}
-        cx={xScale(book["rankLastWeek"] > 10 ? 10 : book["rankLastWeek"])}
-        cy={-10}
-        r={4}
-        fill={`${(color(idx+1) as any).saturate(2)}`}
-        opacity={0.5}
-      />
     </g>
   );
 };
