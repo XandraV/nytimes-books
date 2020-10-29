@@ -1,34 +1,53 @@
-export const reviewsJaneAusten = [
+export const reviewsPopular = [
   {
-    book_title: "Sense",
-    byline: "MARC TRACY",
-    url:
-      "http://query.nytimes.com/gst/fullpage.html?res=9C07E1DA1231F93BA15751C0A9669D8B63",
-  },
-  {
-    book_title: "Northanger Abbey",
-    byline: "JO BAKER",
-    url:
-      "http://www.nytimes.com/2014/06/15/books/review/val-mcdermids-northanger-abbey.html",
-  },
-  {
+    book_author: "Jane Austen",
     book_title: "Mansfield Park",
-    byline: "BARBARA KANTROWITZ",
+    byline: "Barbara Kantrowitz",
     url:
       "http://www.nytimes.com/1999/10/31/movies/film-making-an-austen-heroine-more-like-austen.html",
   },
+  {
+    book_author: "J. K. Rowling",
+    book_title: "Harry Potter and the Deathly Hallows",
+    byline: "Christopher Hitchens",
+    url: "http://www.nytimes.com/2007/08/12/books/review/Hitchens-t.html",
+  }
 ];
 
-export const reviewsJKRowling = [
+export const reviewsBestSellers = [
   {
-    book_title: "Harry Potter and the Deathly Hallows",
-    byline: "CHRISTOPHER HITCHENS",
-    url: "http://www.nytimes.com/2007/08/12/books/review/Hitchens-t.html",
+    url:
+      "https://www.nytimes.com/2020/10/13/books/review-time-for-mercy-john-grisham.html",
+    book_author: "John Grisham",
+    book_title: "A Time for Mercy",
+    byline: "Sarah Lyall",
   },
   {
-    book_title: "The Casual Vacancy",
-    byline: "MICHIKO KAKUTANI",
     url:
-      "http://www.nytimes.com/2012/09/27/books/book-review-the-casual-vacancy-by-j-k-rowling.html",
+      "http://www.nytimes.com/2016/07/10/books/review/hisham-matar-the-return.html",
+    book_author: "Hisham Matar",
+    book_title: "The Return",
+    byline: "Robyn Creswell",
+  },
+  {
+    url:
+      "https://www.nytimes.com/2020/10/05/books/review/tana-french-the-searcher.html",
+    book_author: "Tana French",
+    book_title: "The Searcher",
+    byline: "Janet Maslin",
+  },
+  {
+    url:
+      "https://www.nytimes.com/2020/05/26/books/review-vanishing-half-brit-bennett.html",
+    book_author: "Brit Bennett",
+    book_title: "The Vanishing Half",
+    byline: "Parul Sehgal",
+  },
+  {
+    url:
+      "https://www.nytimes.com/2020/10/06/books/review/rumaan-alam-leave-the-world-behind.html",
+    book_author: "Rumaan Alam",
+    book_title: "Leave the World Behind",
+    byline: "Afia Atakora",
   },
 ];

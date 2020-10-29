@@ -30,7 +30,7 @@ const RankingChartRow: FC<RankingChartRowProps> = ({
   const yScale = d3.scaleLinear().domain([0, 10]).range([height, 0]);
   const xScale = d3
     .scaleLinear()
-    .domain([0, 11])
+    .domain([11, 0])
     .range([20, width / 2]);
 
   const handleClick = () => {
@@ -98,34 +98,34 @@ const RankingChartRow: FC<RankingChartRowProps> = ({
           -35,
           "C",
           xScale(book["rank"]),
-          change ? -20 : -33,
-          change ? xScale(book["rank"] / 2) : xScale(book["rank"]),
-          change ? -30 : -20,
-          xScale(book["rankLastWeek"]),
+          change ? -20 : -15,
+          change ? xScale(book["rank"]) : xScale(book["rank"]*1.2),
+          change ? -30 : -25,
+          xScale(book["rankLastWeek"] > 10 ? 10 : book["rankLastWeek"]),
           -10,
           "L",
           20,
           -10,
           "Z",
         ].join(" ")}
-        fill={`${color(idx)}`}
-        stroke={`${color(idx)}`}
+        fill={`${color(idx+1)}`}
+        stroke={`${color(idx+1)}`}
         strokeWidth="0.1rem"
       />
       <circle
-        key={`current-point-${idx}`}
+        key={`current-point-${idx+1}`}
         cx={xScale(book["rank"])}
         cy={-35}
         r={8}
-        fill={`${(color(idx) as any).saturate(2)}`}
+        fill={`${(color(idx+1) as any).saturate(2)}`}
         opacity={0.5}
       />
       <circle
-        key={`previous-point-${idx}`}
-        cx={xScale(book["rankLastWeek"])}
+        key={`previous-point-${idx+1}`}
+        cx={xScale(book["rankLastWeek"] > 10 ? 10 : book["rankLastWeek"])}
         cy={-10}
         r={4}
-        fill={`${(color(idx) as any).saturate(2)}`}
+        fill={`${(color(idx+1) as any).saturate(2)}`}
         opacity={0.5}
       />
     </g>

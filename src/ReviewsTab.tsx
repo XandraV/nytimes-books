@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getReviews } from "./redux/actions/reviews";
 import styled from "styled-components/macro";
 import ReviewItem from "./ReviewItem";
-import { reviewsJaneAusten, reviewsJKRowling } from "./ReviewsDeafultData";
+import { reviewsPopular, reviewsBestSellers } from "./ReviewsDeafultData";
 
 const DropdownWrapper = styled.span`
   button {
@@ -49,26 +49,16 @@ const ReviewsTab = () => {
   };
   console.log(reviews);
   return (
-    <Container style={{ display: "contents" }}>
-      <Col className="mr-3" sm={5}>
-        <b>Jane Austen</b>
-        <Row className="ml-0">
-          <Container className="mt-1 mb-1">
-            {reviewsJaneAusten.map((review, idx) => (
-              <ReviewItem key={`static-revs-${idx}`} item={review} />
-            ))}
-          </Container>
-        </Row>
-        <b>J. K. Rowling</b>
-        <Row className="ml-0">
-          <Container className="mt-1 mb-1">
-            {reviewsJKRowling.map((review, idx) => (
-              <ReviewItem key={`static-revs-${idx}`} item={review} />
-            ))}
-          </Container>
-        </Row>
+    <Container style={{ display: "contents"}}>
+      <Col className="mr-3 pt-2" sm={5} style={{ border: "1px solid white", borderRadius: "0.5rem" }}>
+        <b>Best Seller Reviews</b>
+        <Container className="mt-2 mb-1">
+          {reviewsBestSellers.map((review, idx) => (
+            <ReviewItem key={`static-revs-${idx}`} item={review} />
+          ))}
+        </Container>
       </Col>
-      <Col sm={5}>
+      <Col sm={6}>
         <Row>
           <InputGroup
             as="span"
@@ -108,21 +98,41 @@ const ReviewsTab = () => {
         </Row>
         <Row>
           <Container className="mt-1 mb-1">
-            <p className="m-5">
-              {loading && <p>Loading...</p>}
-              {reviews.length === 0 &&
-                reviews[0] !== "" &&
-                !loading &&
-                `Your search did not match any reviews.`}
-              {reviews[0] === "" && !loading
-                ? `Type a title, author or isbn to search for reviews.`
-                : reviews.length > 0 &&
-                  !loading &&
-                  reviews.map((review: object | string, idx: number) => (
-                    <ReviewItem key={idx} item={review} />
-                  ))}
-              {error && !loading && <p>{error}</p>}
-            </p>
+            {loading && <p>Loading...</p>}
+            {reviews.length === 0 && reviews[0] !== "" && !loading && (
+              <p className="m-5">Your search did not match any reviews.</p>
+            )}
+
+            {reviews[0] === "" && !loading ? (
+              <p className="m-5">
+                Type a title, author or isbn to search for reviews.
+              </p>
+            ) : (
+              reviews.length > 0 &&
+              !loading && (
+                <Row
+                  className="mt-1 mb-1"
+                  style={{ height: "120px", overflow: "auto", border: "1px solid white", borderRadius: "0.5rem" }}
+                >
+                  <Container className="mt-1 mb-1">
+                    {reviews
+                      .map((review: object | string, idx: number) => (
+                        <ReviewItem key={idx} item={review} />
+                      ))}
+                  </Container>
+                </Row>
+              )
+            )}
+
+            {error && !loading && <p>{error}</p>}
+          </Container>
+        </Row>
+        <Row className="text-left" style={{ border: "1px solid white", borderRadius: "0.5rem" }}>
+          <b className="mt-1 ml-3">Popular Searches</b>
+          <Container className="mt-1 mb-1">
+            {reviewsPopular.map((review, idx) => (
+              <ReviewItem key={`static-revs-${idx}`} item={review} />
+            ))}
           </Container>
         </Row>
       </Col>

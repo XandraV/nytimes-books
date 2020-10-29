@@ -31,7 +31,7 @@ const RankingChart: FC = () => {
       rankLastWeek: book.rank_last_week,
       weeksOnList: book.weeks_on_list,
     };
-  });
+  }).reverse();
 
   return (
     <div className="pt-2">
