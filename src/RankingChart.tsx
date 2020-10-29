@@ -7,7 +7,7 @@ import chroma from "chroma-js";
 import * as d3 from "d3";
 
 const svgWidth = 500;
-const svgHeight = 385;
+const svgHeight = 390;
 const yScale = d3.scaleLinear().domain([0, 10]).range([svgHeight, 0]);
 const color = chroma.scale(["#f08080", "#c3dbba", "#ffd1a1"]).domain([0, 10]);
 
@@ -58,6 +58,7 @@ const RankingChart: FC = () => {
           width={svgWidth}
           height={svgHeight}
           style={{ overflow: "visible" }}
+          viewBox="0 0 500 390"
         >
           <path
             d={["M", 10, svgHeight, "v", 0, "V", 10, "v", 6].join(" ")}

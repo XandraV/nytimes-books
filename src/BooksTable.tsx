@@ -36,7 +36,8 @@ const BooksTable: FC<BooksTableProps> = ({ category }) => {
           style={{
             borderCollapse: "separate",
             borderSpacing: " 0 4px",
-            width: "600px",
+            width: "100%",
+            height: "100%",
           }}
         >
           <thead>
