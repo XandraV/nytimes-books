@@ -113,7 +113,7 @@ const RankingChartRow: FC<RankingChartRowProps> = ({
         fill={`${(color(idx + 1) as any).saturate(2)}`}
         opacity={0.5}
       />
-      {new Array(book.weeksOnList).fill(0).map((z, idx2) => (
+      {/* {new Array(book.weeksOnList).fill(0).map((z, idx2) => (
         // visualisation of weeks on list, right side of the chart
         <rect
           key={`cube-${idx2}`}
@@ -124,7 +124,7 @@ const RankingChartRow: FC<RankingChartRowProps> = ({
           rx={3}
           ry={3}
         />
-      ))}
+      ))} */}
     </g>
   );
 };

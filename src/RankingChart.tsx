@@ -2,9 +2,11 @@ import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import { Col, Row } from "react-bootstrap";
 import RankingChartRow from "./RankingChartRow";
-
+import chroma from "chroma-js";
+import * as d3 from "d3";
 const svgWidth = 500;
 const svgHeight = 385;
+const color = chroma.scale(["#f08080", "#c3dbba", "#ffd1a1"]).domain([0, 10]);
 
 interface RootState {
   books: {
@@ -35,7 +37,7 @@ const RankingChart: FC = () => {
       };
     })
     .reverse();
-
+  const yScale = d3.scaleLinear().domain([0, 10]).range([svgHeight, 0]);
   return (
     <div className="pt-2">
       <Row>
@@ -71,6 +73,22 @@ const RankingChart: FC = () => {
                   book={book}
                   idx={idx}
                 />
+                {new Array(book.weeksOnList).fill(0).map((_, idx2) => (
+                  <g
+                    key={`current-${idx}`}
+                    transform={`translate(-10,${yScale(idx)! + 10})`}
+                  >
+                    <rect
+                      key={`cube-${idx2}`}
+                      transform={`translate(${600 - idx2 * 12}, -30)`}
+                      width={10}
+                      height={20}
+                      fill={`${color(idx)}`}
+                      rx={3}
+                      ry={3}
+                    />
+                  </g>
+                ))}
               </g>
             );
           })}
