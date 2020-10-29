@@ -6,13 +6,17 @@
 
 ![typescript](https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)
 ![react](https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white)
-![styled](https://img.shields.io/badge/-Styled_Components-db7092?style=flat-square&logo=styled-components&logoColor=white)
-![styled](https://img.shields.io/badge/-New_York_Times-000000?style=flat-square&logo=new-york-times&logoColor=white)
+![d3.js](https://img.shields.io/badge/-D3.js-F9A03C?style=flat-square&logo=d3.js&logoColor=black)
 ![redux](https://img.shields.io/badge/-Redux-764ABC?style=flat-square&logo=redux&logoColor=white)
 ![bootstrap](https://img.shields.io/badge/-Bootstrap-563D7C?style=flat-square&logo=bootstrap&logoColor=white)
+![chromajs](https://img.shields.io/badge/-Chroma.js-bd3fc4?style=flat-square&logoColor=white)
+![styled](https://img.shields.io/badge/-Styled_Components-db7092?style=flat-square&logo=styled-components&logoColor=white)
+![nytimes](https://img.shields.io/badge/-New_York_Times-000000?style=flat-square&logo=new-york-times&logoColor=white)
 
 
 A **React - Redux - TypeScript** application that visualises best selling fiction books and allows the user to search for reviews. This project is using [The New York Times public APIs](https://developer.nytimes.com/) to access data on best selling books and reviews.
+
+![Alt text](https://general-gif-bucket.s3.eu-west-2.amazonaws.com/nytimes.gif)
 
 You can visit the deployed app [here](https://master.d26wt54fp9urnn.amplifyapp.com/).
 

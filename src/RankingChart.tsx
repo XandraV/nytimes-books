@@ -88,7 +88,7 @@ const RankingChart: FC = () => {
                       }}
                     >
                       <span>
-                        <strong>{chartData.length-idx}</strong>
+                        <strong>{book.weeksOnList}</strong>
                       </span>
                     </Popover>
                   }
