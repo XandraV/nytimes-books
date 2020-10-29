@@ -12,7 +12,6 @@ type RankingChartRowProps = {
   };
   idx: number;
   width: number;
-  height: number;
 };
 
 const color = chroma.scale(["#f08080", "#c3dbba", "#ffd1a1"]).domain([0, 10]);
@@ -21,13 +20,11 @@ const RankingChartRow: FC<RankingChartRowProps> = ({
   book,
   idx,
   width,
-  height,
 }) => {
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
   const change = book["rank"] - book["rankLastWeek"] > 0;
 
-  const yScale = d3.scaleLinear().domain([0, 10]).range([height, 0]);
   const xScale = d3
     .scaleLinear()
     .domain([11, 0])
@@ -39,8 +36,6 @@ const RankingChartRow: FC<RankingChartRowProps> = ({
   };
   return (
     <g
-      key={`current-${idx}`}
-      transform={`translate(-10,${yScale(idx)! + 10})`}
       onMouseOver={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={() => handleClick()}

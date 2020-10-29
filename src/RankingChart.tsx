@@ -2,10 +2,13 @@ import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import { Col, Row } from "react-bootstrap";
 import RankingChartRow from "./RankingChartRow";
+import { OverlayTrigger, Popover } from "react-bootstrap";
 import chroma from "chroma-js";
 import * as d3 from "d3";
+
 const svgWidth = 500;
 const svgHeight = 385;
+const yScale = d3.scaleLinear().domain([0, 10]).range([svgHeight, 0]);
 const color = chroma.scale(["#f08080", "#c3dbba", "#ffd1a1"]).domain([0, 10]);
 
 interface RootState {
@@ -37,7 +40,7 @@ const RankingChart: FC = () => {
       };
     })
     .reverse();
-  const yScale = d3.scaleLinear().domain([0, 10]).range([svgHeight, 0]);
+
   return (
     <div className="pt-2">
       <Row>
@@ -55,8 +58,6 @@ const RankingChart: FC = () => {
           width={svgWidth}
           height={svgHeight}
           style={{ overflow: "visible" }}
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
         >
           <path
             d={["M", 10, svgHeight, "v", 0, "V", 10, "v", 6].join(" ")}
@@ -66,29 +67,45 @@ const RankingChart: FC = () => {
 
           {chartData.map((book, idx) => {
             return (
-              <g key={`group-${idx}`}>
-                <RankingChartRow
-                  width={svgWidth}
-                  height={svgHeight}
-                  book={book}
-                  idx={idx}
-                />
-                {new Array(book.weeksOnList).fill(0).map((_, idx2) => (
-                  <g
-                    key={`current-${idx}`}
-                    transform={`translate(-10,${yScale(idx)! + 10})`}
-                  >
-                    <rect
-                      key={`cube-${idx2}`}
-                      transform={`translate(${600 - idx2 * 12}, -30)`}
-                      width={10}
-                      height={20}
-                      fill={`${color(idx)}`}
-                      rx={3}
-                      ry={3}
-                    />
+              <g
+                key={`group-${idx}`}
+                transform={`translate(-10,${yScale(idx)! + 10})`}
+              >
+                <RankingChartRow width={svgWidth} book={book} idx={idx} />
+                <OverlayTrigger
+                  trigger={["hover", "focus"]}
+                  placement="left"
+                  overlay={
+                    <Popover
+                    className="p-2 pr-3 pl-3"
+                      id="popover-basic"
+                      style={{
+                        borderBottomColor: `${color(idx+1)}`,
+                        borderWidth: "3px",
+                        borderColor: "#fde8d1",
+                        backgroundColor: `${color(idx+1)}`,
+                      }}
+                    >
+                      <span>
+                        <strong>{chartData.length-idx}</strong>
+                      </span>
+                    </Popover>
+                  }
+                >
+                  <g>
+                    {new Array(book.weeksOnList).fill(0).map((_, idx2) => (
+                      <rect
+                        key={`cube-${idx2}`}
+                        transform={`translate(${600 - idx2 * 12}, -30)`}
+                        width={10}
+                        height={20}
+                        fill={`${color(idx+1)}`}
+                        rx={3}
+                        ry={3}
+                      />
+                    ))}
                   </g>
-                ))}
+                </OverlayTrigger>
               </g>
             );
           })}
