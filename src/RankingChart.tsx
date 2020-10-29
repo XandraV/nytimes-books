@@ -24,14 +24,17 @@ const RankingChart: FC = () => {
   const books = useSelector((state: RootState) => state.books.books);
   const error = useSelector((state: RootState) => state.books.error);
 
-  const chartData = books.slice(0, 10).map((book) => {
-    return {
-      title: book.title,
-      rank: book.rank,
-      rankLastWeek: book.rank_last_week,
-      weeksOnList: book.weeks_on_list,
-    };
-  }).reverse();
+  const chartData = books
+    .slice(0, 10)
+    .map((book) => {
+      return {
+        title: book.title,
+        rank: book.rank,
+        rankLastWeek: book.rank_last_week,
+        weeksOnList: book.weeks_on_list,
+      };
+    })
+    .reverse();
 
   return (
     <div className="pt-2">
@@ -50,6 +53,8 @@ const RankingChart: FC = () => {
           width={svgWidth}
           height={svgHeight}
           style={{ overflow: "visible" }}
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
         >
           <path
             d={["M", 10, svgHeight, "v", 0, "V", 10, "v", 6].join(" ")}
