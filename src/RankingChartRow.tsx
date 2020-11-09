@@ -16,11 +16,7 @@ type RankingChartRowProps = {
 
 const color = chroma.scale(["#f08080", "#c3dbba", "#ffd1a1"]).domain([0, 10]);
 
-const RankingChartRow: FC<RankingChartRowProps> = ({
-  book,
-  idx,
-  width,
-}) => {
+const RankingChartRow: FC<RankingChartRowProps> = ({ book, idx, width }) => {
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
   const change = book["rank"] - book["rankLastWeek"] > 0;
@@ -81,7 +77,13 @@ const RankingChartRow: FC<RankingChartRowProps> = ({
           change ? -20 : -15,
           change ? xScale(book["rank"]) : xScale(book["rank"] * 1.2),
           change ? -30 : -25,
-          xScale(book["rankLastWeek"] > 10 ? 10 : book["rankLastWeek"]),
+          xScale(
+            book["rankLastWeek"] > 10
+              ? 10
+              : book["rankLastWeek"] === 0
+              ? 10
+              : book["rankLastWeek"]
+          ),
           -10,
           "L",
           20,
@@ -102,24 +104,18 @@ const RankingChartRow: FC<RankingChartRowProps> = ({
       />
       <circle
         key={`previous-point-${idx + 1}`}
-        cx={xScale(book["rankLastWeek"] > 10 ? 10 : book["rankLastWeek"])}
+        cx={xScale(
+          book["rankLastWeek"] > 10
+            ? 10
+            : book["rankLastWeek"] === 0
+            ? 11
+            : book["rankLastWeek"]
+        )}
         cy={-10}
         r={4}
         fill={`${(color(idx + 1) as any).saturate(2)}`}
         opacity={0.5}
       />
-      {/* {new Array(book.weeksOnList).fill(0).map((z, idx2) => (
-        // visualisation of weeks on list, right side of the chart
-        <rect
-          key={`cube-${idx2}`}
-          transform={`translate(${600 - idx2 * 12}, -30)`}
-          width={10}
-          height={20}
-          fill={`${color(idx)}`}
-          rx={3}
-          ry={3}
-        />
-      ))} */}
     </g>
   );
 };
