@@ -94,7 +94,7 @@ const RankingChart: FC = () => {
                   }
                 >
                   <g>
-                    {new Array(book.weeksOnList).fill(0).map((_, idx2) => (
+                    {new Array(book.weeksOnList > 15 ? 15 : book.weeksOnList).fill(0).map((_, idx2) => (
                       <rect
                         key={`cube-${idx2}`}
                         transform={`translate(${600 - idx2 * 12}, -30)`}
