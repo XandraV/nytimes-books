@@ -1,6 +1,7 @@
 
 ![contributors](https://img.shields.io/github/contributors/XandraV/nytimes-books?color=purple)
 ![commit](https://img.shields.io/github/last-commit/XandraV/nytimes-books?color=cyan)
+![unit](https://github.com/XandraV/nytimes-books/workflows/NYTIMES%20unit%20tests/badge.svg)
 
 # The New York Times Best Selling Books
 
