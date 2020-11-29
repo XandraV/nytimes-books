@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Col, Container, Row, Tab, Tabs } from "react-bootstrap";
 import BooksTable from "./BooksTable";
-import RankingChart from "./RankingChart";
 import ReviewsTab from "./ReviewsTab";
 import PageWrapper from "./PageWrapper";
 import Logo from "./Logo";
+import BarPlot from "./BarPlot";
 
 const categories = [
   { title: "Fiction", category: "hardcover-fiction" },
@@ -18,7 +18,7 @@ function App() {
       <Logo />
       <h3>Best Selling Books</h3>
       <Tabs
-        className="mr-4 ml-4"
+        className="m-0"
         id="uncontrolled-tab-example"
         activeKey={key}
         onSelect={(k) => setKey(k)}
@@ -26,7 +26,7 @@ function App() {
         {categories.map((cat) => (
           <Tab
             key={cat.category}
-            className="p-1"
+            className="p-3"
             eventKey={cat.title}
             title={cat.title}
             style={{
@@ -34,7 +34,7 @@ function App() {
               textAlign: `${cat.title === "Reviews" ? "-webkit-center" : ""}`,
             }}
           >
-            <Container className="m-1">
+            <Container className="m-0" style={{display:'contents'}}>
               {key !== "Reviews" ? (
                 <Row>
                   <Col>
@@ -47,7 +47,7 @@ function App() {
                     />
                   </Col>
                   <Col className="p-0">
-                    <RankingChart />
+                  <BarPlot/>
                   </Col>
                 </Row>
               ) : (

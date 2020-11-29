@@ -2,10 +2,14 @@ import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getBooks } from "./redux/actions/books";
 import { Table } from "react-bootstrap";
+import * as d3 from "d3";
 import chroma from "chroma-js";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 
-const color = chroma.scale(["#f08080", "#c3dbba", "#ffd1a1"]).domain([10, 0]);
+const color = d3
+.scaleLinear<string>()
+.domain([1, 7, 15])
+.range(["#FF94BD", "#C7E2FF", "#FFB846"]);
 
 type BooksTableProps = {
   category: string;
@@ -38,6 +42,7 @@ const BooksTable: FC<BooksTableProps> = ({ category }) => {
             borderSpacing: " 0 4px",
             width: "100%",
             height: "100%",
+            fontSize:"0.9rem"
           }}
         >
           <thead>
@@ -49,7 +54,7 @@ const BooksTable: FC<BooksTableProps> = ({ category }) => {
             </tr>
           </thead>
           <tbody>
-            {books.slice(0, 10).map((book: any, idx) => (
+            {books.map((book: any, idx) => (
               <OverlayTrigger
                 trigger={["hover", "focus"]}
                 placement="top"
@@ -73,7 +78,7 @@ const BooksTable: FC<BooksTableProps> = ({ category }) => {
                             padding: "0.2rem",
                             marginBottom:"0.5rem",
                             maxWidth: "6rem",
-                            backgroundColor: `${color(idx)
+                            backgroundColor: `${chroma(color(idx)!)
                               .darken(0.5)
                               .saturate(1)}`,
                           }}
