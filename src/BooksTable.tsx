@@ -6,6 +6,8 @@ import * as d3 from "d3";
 import chroma from "chroma-js";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 
+//TODO add animated entrance
+
 const color = d3
 .scaleLinear<string>()
 .domain([1, 7, 15])
@@ -21,7 +23,6 @@ interface RootState {
 const BooksTable: FC<BooksTableProps> = ({ category }) => {
   const dispatch = useDispatch();
   const books = useSelector((state: RootState) => state.books.books);
-  const loading = useSelector((state: RootState) => state.books.loading);
 
   useEffect(() => {
     dispatch(getBooks(category));
@@ -29,8 +30,7 @@ const BooksTable: FC<BooksTableProps> = ({ category }) => {
 
   return (
     <>
-      {loading && <p>Loading...</p>}
-      {books.length > 0 && !loading && (
+      {books.length > 0  && (
         <Table
           striped
           borderless
@@ -39,25 +39,17 @@ const BooksTable: FC<BooksTableProps> = ({ category }) => {
           className="text-center"
           style={{
             borderCollapse: "separate",
-            borderSpacing: " 0 4px",
-            width: "100%",
+            borderSpacing: " 0 2px",
+            width: "8%",
             height: "100%",
             fontSize:"0.9rem"
           }}
         >
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th></th>
-              <th>Author</th>
-              <th>Title</th>
-            </tr>
-          </thead>
           <tbody>
             {books.map((book: any, idx) => (
               <OverlayTrigger
                 trigger={["hover", "focus"]}
-                placement="top"
+                placement="left"
                 overlay={
                   <Popover
                     id="popover-basic"
@@ -101,10 +93,6 @@ const BooksTable: FC<BooksTableProps> = ({ category }) => {
                   <td>#{book.rank}</td>
                   <td>
                     <img alt="" height={20} src={book.book_image} />
-                  </td>
-                  <td>{book.author}</td>
-                  <td>
-                    {book.title.charAt(0) + book.title.slice(1).toLowerCase()}
                   </td>
                 </tr>
               </OverlayTrigger>

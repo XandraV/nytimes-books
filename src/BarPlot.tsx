@@ -2,6 +2,39 @@ import React, { FC, useState } from "react";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import * as d3 from "d3";
+import styled from "styled-components/macro";
+const Wrapper = styled.div`
+  svg {
+    @-webkit-keyframes scale-in-center {
+      0% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+        opacity: 1;
+      }
+      100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    @keyframes scale-in-center {
+      0% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+        opacity: 1;
+      }
+      100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    -webkit-animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+      both;
+    animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+`;
 
 interface RootState {
   books: {
@@ -22,7 +55,7 @@ const BarPlot: FC = () => {
   const error = useSelector((state: RootState) => state.books.error);
 
   const width = 600;
-  const height = 600;
+  const height = 560;
   const innerRadiusRanking = 60;
   const outerRadiusRanking = 100;
   const innerRadiusWeeks = 110;
@@ -51,13 +84,16 @@ const BarPlot: FC = () => {
     .range(["#FF94BD", "#C7E2FF", "#FFB846"]);
 
   return (
-    <>
+    <Wrapper>
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <svg width={width} height={height} style={{marginTop:'-1rem'}}>
+        <svg
+          width={width}
+          height={height}
+          style={{ overflow: "visible", marginTop: "-1rem" }}
+        >
           {books.map((d, idx) => {
-            console.log(d);
             return (
               <OverlayTrigger
                 trigger={["hover", "focus"]}
@@ -71,7 +107,6 @@ const BarPlot: FC = () => {
                       borderColor: "white",
                       backgroundColor: `${color(idx)}`,
                       maxWidth: "30rem",
-                      // textAlign: "center",
                       color: `white`,
                     }}
                   >
@@ -93,6 +128,15 @@ const BarPlot: FC = () => {
                     key={`segment${idx}`}
                     transform={`translate(${height / 2} ${width / 2})`}
                   >
+                    <line
+                      transform={`rotate(${12 + 24 * idx})`}
+                      x1={0}
+                      y1={0}
+                      y2={300}
+                      stroke={"#E3CDA3"}
+                      strokeWidth={1}
+                      strokeDasharray={4}
+                    />
                     <path
                       className={`arcRank-${idx}`}
                       d={
@@ -173,7 +217,7 @@ const BarPlot: FC = () => {
         </svg>
       )}
       {error && error.message}
-    </>
+    </Wrapper>
   );
 };
 

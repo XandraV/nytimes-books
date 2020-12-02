@@ -1,19 +1,22 @@
 import React, { FC } from "react";
 import styled from "styled-components/macro";
 const StyledPageWrapper = styled.div`
-  text-align: center;
-  nav > a.nav-link.active,
-  nav > a.nav-link {
-    color: black;
-    background-color: #fde8d1;
-    border-bottom: 1px solid #ffffff;
+  margin: 2rem;
+  .title {
+    font-weight: bold;
   }
-  nav > a.nav-link.active {
-    border-color: #ffffff;
-    border-bottom: transparent;
+  .table {
+    float: right;
   }
-  nav {
-    border-bottom: 1px solid #ffffff;
+  .MuiTypography-body1 {
+    font-family: inherit;
+    font-size: 0.9rem;
+  }
+  label {
+    margin-bottom: 0;
+  }
+  .MuiIconButton-label {
+    color: #d3b8ae;
   }
 `;
 
