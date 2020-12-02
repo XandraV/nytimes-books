@@ -1,6 +1,4 @@
-import React, { FC, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getBooks } from "./redux/actions/books";
+import React, { FC } from "react";
 import { Table } from "react-bootstrap";
 import * as d3 from "d3";
 import chroma from "chroma-js";
@@ -9,28 +7,19 @@ import { OverlayTrigger, Popover } from "react-bootstrap";
 //TODO add animated entrance
 
 const color = d3
-.scaleLinear<string>()
-.domain([1, 7, 15])
-.range(["#FF94BD", "#C7E2FF", "#FFB846"]);
+  .scaleLinear<string>()
+  .domain([1, 7, 15])
+  .range(["#FF94BD", "#C7E2FF", "#FFB846"]);
 
 type BooksTableProps = {
-  category: string;
+  books: any;
 };
-interface RootState {
-  books: { books: Array<object>; loading: boolean; error: { message: string } };
-}
 
-const BooksTable: FC<BooksTableProps> = ({ category }) => {
-  const dispatch = useDispatch();
-  const books = useSelector((state: RootState) => state.books.books);
-
-  useEffect(() => {
-    dispatch(getBooks(category));
-  }, [category]);
-
+const BooksTable: FC<BooksTableProps> = ({ books }) => {
+  console.log(books)
   return (
     <>
-      {books.length > 0  && (
+      {books.length > 0 && (
         <Table
           striped
           borderless
@@ -42,12 +31,13 @@ const BooksTable: FC<BooksTableProps> = ({ category }) => {
             borderSpacing: " 0 2px",
             width: "8%",
             height: "100%",
-            fontSize:"0.9rem"
+            fontSize: "0.9rem",
           }}
         >
           <tbody>
-            {books.map((book: any, idx) => (
+            {books.map((book: any, idx: number) => (
               <OverlayTrigger
+              key={`book${idx}`}
                 trigger={["hover", "focus"]}
                 placement="left"
                 overlay={
@@ -68,7 +58,7 @@ const BooksTable: FC<BooksTableProps> = ({ category }) => {
                           style={{
                             borderRadius: "0.2rem",
                             padding: "0.2rem",
-                            marginBottom:"0.5rem",
+                            marginBottom: "0.5rem",
                             maxWidth: "6rem",
                             backgroundColor: `${chroma(color(idx)!)
                               .darken(0.5)

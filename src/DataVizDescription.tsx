@@ -30,16 +30,16 @@ const DataVizDescription = () => {
         fill={"none"}
         opacity={0.8}
       />
-      <circle cx={60} cy={100} r={3} fill={"white"} />
-      <circle cx={43} cy={100} r={3} fill={"white"} />
-      <circle cx={25} cy={100} r={3} fill={"white"} />
+      <circle cx={60} cy={100} r={2} fill={"white"} />
+      <circle cx={43} cy={100} r={2} fill={"white"} />
+      <circle cx={25} cy={100} r={2} fill={"white"} />
       <path
         d="M 60 100
            L 60 170
            L 100 170"
         stroke="white"
         fill={"none"}
-        stroke-width="1"
+        strokeWidth="1"
       />
       <path
         d="M 43 100
@@ -47,7 +47,7 @@ const DataVizDescription = () => {
         L 100 190"
         stroke="white"
         fill={"none"}
-        stroke-width="1"
+        strokeWidth="1"
       />
       <path
         d="M 25 100
@@ -55,7 +55,7 @@ const DataVizDescription = () => {
         L 100 210"
         stroke="white"
         fill={"none"}
-        stroke-width="1"
+        strokeWidth="1"
       />
       <text
         textAnchor="middle"
