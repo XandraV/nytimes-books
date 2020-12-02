@@ -6,6 +6,9 @@ type BarPlotProps = {
   books: any;
 };
 const Wrapper = styled.div`
+  div.arrow {
+    display: none;
+  }
   svg {
     @-webkit-keyframes swirl-in-fwd {
       0% {
@@ -87,10 +90,10 @@ const BarPlot: FC<BarPlotProps> = ({ books }) => {
         height={height}
         style={{ overflow: "visible", marginTop: "-1rem" }}
       >
-        {books.map((d:any, idx:number) => {
+        {books.map((d: any, idx: number) => {
           return (
             <OverlayTrigger
-            key={`bookPlot${idx}`}
+              key={`bookPlot${idx}`}
               trigger={["hover", "focus"]}
               placement={idx < 5 ? "right" : "left"}
               overlay={

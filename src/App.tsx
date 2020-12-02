@@ -34,7 +34,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getBooks(category));
-  }, [category]);
+  }, [category, dispatch]);
 
   const handleChange = (event: any) => {
     setCategory(event.target.value);
@@ -45,18 +45,20 @@ function App() {
         <Row className="m-3">
           <div className="p-0">
             <Logo />
-            <div className="title mb-3">
+            <div className="title-main mb-3">
               Top 15 Best Selling Books in Category: Fiction
             </div>
             <div className="ml-4">
-              <div className="title mb-2">Reading the data visualisation</div>
-              <div className="mb-1">
+              <div className="title-sub mb-2">
+                Reading the data visualisation
+              </div>
+              <div className="rank mb-1">
                 <svg width={10} height={10}>
                   <rect width={10} height={10} fill={"#FF94BD"} rx={3} ry={3} />
                 </svg>{" "}
                 rank this week
               </div>
-              <div>
+              <div className="rank">
                 <svg width={10} height={10}>
                   <rect
                     width={10}
@@ -69,11 +71,11 @@ function App() {
                 rank last week
               </div>
               <DataVizDescription />
-              <div className="ml-2">
+              <div className="radio ml-2">
                 <FormControl component="fieldset">
                   <RadioGroup
-                    aria-label="gender"
-                    name="gender1"
+                    aria-label="category"
+                    name="category"
                     value={category}
                     onChange={handleChange}
                   >
@@ -92,6 +94,7 @@ function App() {
               </div>
             </div>
           </div>
+          {loading && <div>Loading...</div>}
           {books.length > 0 && (
             <>
               <Col className="p-0 ml-5">
@@ -102,7 +105,6 @@ function App() {
               </Col>
             </>
           )}
-          {loading && <div>Loading...</div>}
           {error && <div>Failed to load data for {category} books.</div>}
         </Row>
       </Container>

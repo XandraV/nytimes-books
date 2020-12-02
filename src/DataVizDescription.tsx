@@ -1,8 +1,40 @@
 import React from "react";
+import styled from "styled-components/macro";
 
+const StyledSVG = styled.svg`
+  margin-top: -2rem;
+  @-webkit-keyframes flip-in-hor-bottom {
+    0% {
+      -webkit-transform: rotateX(80deg);
+      transform: rotateX(80deg);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: rotateX(0);
+      transform: rotateX(0);
+      opacity: 1;
+    }
+  }
+  @keyframes flip-in-hor-bottom {
+    0% {
+      -webkit-transform: rotateX(80deg);
+      transform: rotateX(80deg);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: rotateX(0);
+      transform: rotateX(0);
+      opacity: 1;
+    }
+  }
+
+  -webkit-animation: flip-in-hor-bottom 0.5s
+    cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s both;
+  animation: flip-in-hor-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s both;
+`;
 const DataVizDescription = () => {
   return (
-    <svg width={200} height={230}>
+    <StyledSVG width={200} height={230}>
       <circle
         cx={75}
         cy={100}
@@ -57,31 +89,16 @@ const DataVizDescription = () => {
         fill={"none"}
         strokeWidth="1"
       />
-      <text
-        textAnchor="middle"
-        x={145}
-        y={172}
-        fontSize={12}
-      >
+      <text textAnchor="middle" x={145} y={172} fontSize={12}>
         rank this week
       </text>
-      <text
-        textAnchor="middle"
-        x={142}
-        y={192}
-        fontSize={12}
-      >
+      <text textAnchor="middle" x={142} y={192} fontSize={12}>
         weeks on list
       </text>
-      <text
-        textAnchor="middle"
-        x={149}
-        y={212}
-        fontSize={12}
-      >
+      <text textAnchor="middle" x={149} y={212} fontSize={12}>
         title of the book
       </text>
-    </svg>
+    </StyledSVG>
   );
 };
 
