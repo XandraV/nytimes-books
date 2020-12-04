@@ -71,6 +71,14 @@ const BarPlot: FC<BarPlotProps> = ({ books }) => {
     .domain([0, 7, 15])
     .range(["#FF94BD", "#C7E2FF", "#FFB846"]);
 
+  function splitSentence(sentence: string) {
+    let first = "";
+    let second = "";
+    sentence.split(" ").map((word: string) => {
+      first.length > 15 ? (second += ` ${word}`) : (first += ` ${word}`);
+    });
+    return { first, second };
+  }
   return (
     <Wrapper>
       <svg
@@ -79,6 +87,7 @@ const BarPlot: FC<BarPlotProps> = ({ books }) => {
         style={{ overflow: "visible", marginTop: "-1rem" }}
       >
         {books.map((d: any, idx: number) => {
+          const { first, second } = splitSentence(d.title);
           return (
             <OverlayTrigger
               key={`bookPlot${idx}`}
@@ -206,7 +215,24 @@ const BarPlot: FC<BarPlotProps> = ({ books }) => {
                       d.rank
                     )} ${outerRadiusWeeks})`} // rotate(a,x,y) rotate around a given point
                   >
-                    {d.title}
+                    {first}
+                  </text>
+                </g>
+                <g
+                  transform={`translate(${height / 2} ${width / 2}) rotate(${
+                    180 + d.rank * 24
+                  })`}
+                >
+                  // rotate around the chart
+                  <text
+                    textAnchor="start"
+                    y={outerRadiusWeeks}
+                    fontSize={11}
+                    transform={`rotate(86, ${xScale(
+                      d.rank
+                    )} ${outerRadiusWeeks})`} // rotate(a,x,y) rotate around a given point
+                  >
+                    {second}
                   </text>
                 </g>
                 <g
