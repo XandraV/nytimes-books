@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getBooks } from "./redux/actions/books";
 import { Col, Container, Row } from "react-bootstrap";
-import BooksTable from "./BooksTable";
 import PageWrapper from "./PageWrapper";
 import Logo from "./Logo";
 import BarPlot from "./BarPlot";
@@ -11,6 +10,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import DataVizDescription from "./DataVizDescription";
+import "./App.css";
 
 interface RootState {
   books: {
@@ -95,13 +95,10 @@ function App() {
             </div>
           </div>
           {loading && <div>Loading...</div>}
-          {books.length > 0 && (
+          {books.length > 0 && !loading && (
             <>
               <Col className="p-0 ml-5">
                 <BarPlot books={books} />
-              </Col>
-              <Col className="table">
-                <BooksTable books={books} />
               </Col>
             </>
           )}

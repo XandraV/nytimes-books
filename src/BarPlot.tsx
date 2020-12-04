@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import * as d3 from "d3";
 import styled from "styled-components/macro";
+import chroma from "chroma-js";
 type BarPlotProps = {
   books: any;
 };
@@ -39,19 +40,6 @@ const Wrapper = styled.div`
     animation: swirl-in-fwd 0.6s ease-out both;
   }
 `;
-
-interface RootState {
-  books: {
-    books: Array<{
-      title: string;
-      rank: number;
-      rank_last_week: number;
-      weeks_on_list: number;
-    }>;
-    loading: boolean;
-    error: { message: string };
-  };
-}
 
 const BarPlot: FC<BarPlotProps> = ({ books }) => {
   const width = 600;
@@ -95,7 +83,7 @@ const BarPlot: FC<BarPlotProps> = ({ books }) => {
             <OverlayTrigger
               key={`bookPlot${idx}`}
               trigger={["hover", "focus"]}
-              placement={idx < 5 ? "right" : "left"}
+              placement={idx > 7 ? "left" : "right"}
               overlay={
                 <Popover
                   id="popover-basic"
@@ -104,14 +92,28 @@ const BarPlot: FC<BarPlotProps> = ({ books }) => {
                     borderWidth: "3px",
                     borderColor: "white",
                     backgroundColor: `${color(idx)}`,
-                    maxWidth: "30rem",
+                    maxWidth: "20rem",
                     color: `white`,
                   }}
                 >
-                  <span className="d-flex p-1">
-                    <span>
+                  <span className="d-flex p-3">
+                    <img alt="" height={150} src={d.book_image} />{" "}
+                    <span className="pl-3">
+                      <div
+                        style={{
+                          borderRadius: "0.2rem",
+                          padding: "0.2rem",
+                          marginBottom: "0.5rem",
+                          maxWidth: "6rem",
+                          backgroundColor: `${chroma(color(idx)!)
+                            .darken(0.5)
+                            .saturate(1)}`,
+                        }}
+                      >
+                        #{d.rank} this week
+                      </div>
                       <strong>{d.title}</strong>
-                      <div>rank this week: #{d.rank}</div>
+                      <h6 className="font-italic">by {d.author}</h6>
                       <div style={{ color: "#ffffffa8", fontSize: 12 }}>
                         rank last week: #{d.rank_last_week}
                       </div>
@@ -192,10 +194,9 @@ const BarPlot: FC<BarPlotProps> = ({ books }) => {
                 </g>
                 <g
                   transform={`translate(${height / 2} ${width / 2}) rotate(${
-                    170 + d.rank * 24
+                    175 + d.rank * 24
                   })`}
                 >
-                  {" "}
                   // rotate around the chart
                   <text
                     textAnchor="start"
@@ -207,6 +208,18 @@ const BarPlot: FC<BarPlotProps> = ({ books }) => {
                   >
                     {d.title}
                   </text>
+                </g>
+                <g
+                  transform={`translate(${height / 2} ${width / 2}) rotate(${
+                    170 + d.rank * 24
+                  })`}
+                >
+                  <image
+                    y={outerRadiusWeeks}
+                    href={d.book_image}
+                    height="30"
+                    width="30"
+                  />
                 </g>
               </g>
             </OverlayTrigger>
