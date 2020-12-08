@@ -15,7 +15,7 @@
 ![nytimes](https://img.shields.io/badge/-New_York_Times-000000?style=flat-square&logo=new-york-times&logoColor=white)
 
 
-A **React - Redux - TypeScript** application that visualises best selling fiction books and allows the user to search for reviews. This project is using [The New York Times public APIs](https://developer.nytimes.com/) to access data on best selling books and reviews.
+A **React - Redux - TypeScript** application that visualises best selling fiction books and non-fiction books. This project is using [The New York Times public APIs](https://developer.nytimes.com/) to access data on best selling books and reviews.
 
 ![Alt text](https://general-gif-bucket.s3.eu-west-2.amazonaws.com/nytimes.gif)
 
