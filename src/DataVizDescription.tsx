@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useContext} from "react";
 import styled from "styled-components/macro";
+import { ThemeContext } from "./ThemeProvider";
 
 const StyledSVG = styled.svg`
   margin-top: -2rem;
@@ -34,6 +35,7 @@ const StyledSVG = styled.svg`
     both;
 `;
 const DataVizDescription = () => {
+  const { theme } = useContext(ThemeContext);
   return (
     <>
       <div className="title-main mb-3">
@@ -109,13 +111,13 @@ const DataVizDescription = () => {
           fill={"none"}
           strokeWidth="1"
         />
-        <text textAnchor="middle" x={145} y={172} fontSize={12}>
+        <text fill={theme.color} textAnchor="middle" x={145} y={172} fontSize={12}>
           rank this week
         </text>
-        <text textAnchor="middle" x={142} y={192} fontSize={12}>
+        <text fill={theme.color} textAnchor="middle" x={142} y={192} fontSize={12}>
           weeks on list
         </text>
-        <text textAnchor="middle" x={149} y={212} fontSize={12}>
+        <text fill={theme.color} textAnchor="middle" x={149} y={212} fontSize={12}>
           title of the book
         </text>
       </StyledSVG>

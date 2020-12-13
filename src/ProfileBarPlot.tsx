@@ -1,10 +1,9 @@
-import React, { FC, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getBooks } from "./redux/actions/books";
+import React, { FC, useContext } from "react";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import * as d3 from "d3";
 import styled from "styled-components/macro";
 import chroma from "chroma-js";
+import { ThemeContext } from "./ThemeProvider";
 type BarPlotProps = {
   books: Array<{
     title: string;
@@ -47,8 +46,8 @@ const Wrapper = styled.div`
     animation: swirl-in-fwd 0.6s ease-out both;
   }
 `;
-
 const ProfileBarPlot: FC<BarPlotProps> = ({ books }) => {
+  const { theme } = useContext(ThemeContext);
   const booksNum = books.length;
   const width = 600;
   const height = 510;
@@ -82,9 +81,11 @@ const ProfileBarPlot: FC<BarPlotProps> = ({ books }) => {
   function splitSentence(sentence: string) {
     let first = "";
     let second = "";
-    sentence.split(" ").map((word: string) => {
-      first.length > 15 ? (second += ` ${word}`) : (first += ` ${word}`);
-    });
+    sentence
+      .split(" ")
+      .map((word: string) =>
+        first.length > 15 ? (second += ` ${word}`) : (first += ` ${word}`)
+      );
     return { first, second };
   }
   return (
@@ -187,6 +188,7 @@ const ProfileBarPlot: FC<BarPlotProps> = ({ books }) => {
                     y={innerRadiusRanking - 10}
                     fontSize={11}
                     transform={`rotate(${idx * (360 / booksNum)})`}
+                    fill={theme.color}
                   >
                     {d.score}
                   </text>
@@ -202,6 +204,7 @@ const ProfileBarPlot: FC<BarPlotProps> = ({ books }) => {
                     y={outerRadiusWeeks}
                     fontSize={11}
                     transform={`rotate(90, ${xScale(idx)} ${outerRadiusWeeks})`} // rotate(a,x,y) rotate around a given point
+                    fill={theme.color}
                   >
                     {first}
                   </text>
@@ -217,6 +220,7 @@ const ProfileBarPlot: FC<BarPlotProps> = ({ books }) => {
                     y={outerRadiusWeeks}
                     fontSize={11}
                     transform={`rotate(86, ${xScale(idx)} ${outerRadiusWeeks})`} // rotate(a,x,y) rotate around a given point
+                    fill={theme.color}
                   >
                     {second}
                   </text>

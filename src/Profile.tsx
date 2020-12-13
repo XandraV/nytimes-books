@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsersBooks } from "./redux/actions/usersBooks";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Table } from "react-bootstrap";
 import PageWrapper from "./PageWrapper";
-import chroma from "chroma-js";
-import { Table, OverlayTrigger, Popover } from "react-bootstrap";
-import DataVizDescription from "./DataVizDescription";
 import * as d3 from "d3";
 import ProfileBarPlot from "./ProfileBarPlot";
+import { ThemeContext } from "./ThemeProvider";
 
 interface RootState {
   usersBooks: {
@@ -32,19 +30,19 @@ const Profile = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("currentUser") || "{}");
-
+  const { theme } = useContext(ThemeContext);
   const [accessToken, setAccessToken] = useState(user.accessToken || "");
-  const [refreshToken, setRefreshToken] = useState(user.refreshToken || "");
+  const [refreshToken] = useState(user.refreshToken || "");
   const books = useSelector((state: RootState) => state.usersBooks.books);
   const loading = useSelector((state: RootState) => state.usersBooks.loading);
 
   useEffect(() => {
     dispatch(getUsersBooks(accessToken));
-  }, []);
+  }, [accessToken, dispatch]);
 
   async function logOut(token: string) {
     localStorage.removeItem("currentUser");
-    setAccessToken(null)
+    setAccessToken(null);
     return await fetch(`http://localhost:5000/logout`, {
       headers: {
         "Content-Type": "application/json",
@@ -62,7 +60,7 @@ const Profile = () => {
     logOut(refreshToken);
   }
   return (
-    <PageWrapper>
+    <PageWrapper theme={theme}>
       <Container className="m-0" style={{ display: "contents" }}>
         {!books && loading && "Loading"}
         {books && !loading && (
@@ -70,10 +68,10 @@ const Profile = () => {
             <Col>
               <h4
                 style={{
-                  color: "black",
                   borderRadius: "0.2rem",
                   padding: "0.2rem",
                   backgroundColor: `pink`,
+                  color: theme.color,
                 }}
               >
                 {user.username}'s books
@@ -88,10 +86,11 @@ const Profile = () => {
                   borderCollapse: "separate",
                   borderSpacing: " 0 4px",
                   width: "100%",
+                  color: theme.color,
                 }}
               >
                 <thead>
-                  <tr>
+                  <tr style={{ backgroundColor: `${color(0)}` }}>
                     <th>Score</th>
                     <th>Author</th>
                     <th>Title</th>
@@ -101,8 +100,8 @@ const Profile = () => {
                   {books.map((book: any, idx) => (
                     <tr
                       className={`${idx}`}
-                      key={book.title}
-                      style={{ backgroundColor: `${color(idx)}` }}
+                      key={`${book.title + idx}`}
+                      style={{ backgroundColor: `${color(idx)}`}}
                     >
                       <td>{book.score}</td>
                       <td>{book.author}</td>

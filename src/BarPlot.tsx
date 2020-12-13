@@ -1,10 +1,11 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getBooks } from "./redux/actions/books";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import * as d3 from "d3";
 import styled from "styled-components/macro";
 import chroma from "chroma-js";
+import { ThemeContext } from "./ThemeProvider";
 type BarPlotProps = {
   category: any;
 };
@@ -55,6 +56,7 @@ interface RootState {
   };
 }
 const BarPlot: FC<BarPlotProps> = ({ category }) => {
+  const { theme } = useContext(ThemeContext);
   const dispatch = useDispatch();
   const loading = useSelector((state: RootState) => state.books.loading);
   const books = useSelector((state: RootState) => state.books.books);
@@ -96,9 +98,9 @@ const BarPlot: FC<BarPlotProps> = ({ category }) => {
   function splitSentence(sentence: string) {
     let first = "";
     let second = "";
-    sentence.split(" ").map((word: string) => {
-      first.length > 15 ? (second += ` ${word}`) : (first += ` ${word}`);
-    });
+    sentence.split(" ").map((word: string) => (
+      first.length > 15 ? (second += ` ${word}`) : (first += ` ${word}`)
+    ));
     return { first, second };
   }
   return (
@@ -221,6 +223,7 @@ const BarPlot: FC<BarPlotProps> = ({ category }) => {
                       y={innerRadiusRanking - 5}
                       fontSize={11}
                       transform={`rotate(${d.rank * 24})`}
+                      fill={theme.color}
                     >
                       {d.rank}
                     </text>
@@ -238,6 +241,7 @@ const BarPlot: FC<BarPlotProps> = ({ category }) => {
                       transform={`rotate(90, ${xScale(
                         d.rank
                       )} ${outerRadiusWeeks})`} // rotate(a,x,y) rotate around a given point
+                    fill={theme.color}
                     >
                       {first}
                     </text>
@@ -255,6 +259,7 @@ const BarPlot: FC<BarPlotProps> = ({ category }) => {
                       transform={`rotate(86, ${xScale(
                         d.rank
                       )} ${outerRadiusWeeks})`} // rotate(a,x,y) rotate around a given point
+                      fill={theme.color}
                     >
                       {second}
                     </text>
