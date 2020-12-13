@@ -1,25 +1,33 @@
 import React, { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "./redux/actions/login";
-import { Col, Container, Form, Row } from "react-bootstrap";
+import { Col, Container, Form, Row , Alert} from "react-bootstrap";
 import PageWrapper from "./PageWrapper";
 import Logo from "./Logo";
 import BarPlot from "./BarPlot";
 import {
-  FormControl,
   FormControlLabel,
   Radio,
   RadioGroup,
 } from "@material-ui/core";
+
 import DataVizDescription from "./DataVizDescription";
 
+interface RootState {
+  login: {
+    loading: string;
+    error: string;
+  };
+}
 const Home = () => {
   const dispatch = useDispatch();
+  const loading = useSelector((state: RootState) => state.login.loading) as any;
+  const error = useSelector((state: RootState) => state.login.error);
   const [category, setCategory] = useState("hardcover-fiction");
   const usernameRef = useRef(null);
   const passwordRef = useRef(null);
 
-   const handleCategoryChange = (event: any) => {
+  const handleCategoryChange = (event: any) => {
     setCategory(event.target.value);
   };
 
@@ -51,7 +59,6 @@ const Home = () => {
             <div className="p-0">
               <DataVizDescription />
               <div className="radio ml-2">
-                <FormControl component="fieldset">
                   <RadioGroup
                     aria-label="category"
                     name="category"
@@ -69,7 +76,6 @@ const Home = () => {
                       label="Non-fiction"
                     />
                   </RadioGroup>
-                </FormControl>
               </div>
             </div>
           </Col>
@@ -88,24 +94,18 @@ const Home = () => {
                 }}
               >
                 <h6 className="text-center mb-3 font-weight-bold">Log In</h6>
+                {error && <Alert variant="danger">{"Please enter a valid username or password."}</Alert>}
                 <Form.Group id="email">
                   <Form.Label>Username: Alice</Form.Label>
-                  <Form.Control
-                    type="username"
-                    ref={usernameRef}
-                    required
-                  />
+                  <Form.Control type="username" ref={usernameRef} required />
                 </Form.Group>
                 <Form.Group id="password">
                   <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    ref={passwordRef}
-                    required
-                  />
+                  <Form.Control type="password" ref={passwordRef} required />
                 </Form.Group>
                 <div className="text-center">
                   <button
+                    disabled={loading}
                     className="btn btn-secondary"
                     type="submit"
                   >

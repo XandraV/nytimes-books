@@ -44,6 +44,7 @@ const Profile = () => {
 
   async function logOut(token: string) {
     localStorage.removeItem("currentUser");
+    setAccessToken(null)
     return await fetch(`http://localhost:5000/logout`, {
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +54,6 @@ const Profile = () => {
       method: "DELETE",
       body: JSON.stringify({ token: token }),
     }).then(() => {
-      localStorage.removeItem("currentUser");
       history.push("/");
     });
   }
