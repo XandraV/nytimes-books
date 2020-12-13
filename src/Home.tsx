@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "./redux/actions/login";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Form, Row } from "react-bootstrap";
 import PageWrapper from "./PageWrapper";
 import Logo from "./Logo";
 import BarPlot from "./BarPlot";
@@ -12,53 +12,25 @@ import {
   RadioGroup,
 } from "@material-ui/core";
 import DataVizDescription from "./DataVizDescription";
-import styled from "styled-components/macro";
-const StyledForm = styled.form`
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 0.75rem;
-  border: 2px solid white;
-  max-width: 20rem;
-  div.btn-submit {
-    text-align: center;
-    margin: 0.5rem;
-  }
-  h6 {
-    font-weight: bold;
-    text-align: center;
-  }
-`;
 
-const Home = () => { 
+const Home = () => {
   const dispatch = useDispatch();
   const [category, setCategory] = useState("hardcover-fiction");
+  const usernameRef = useRef(null);
+  const passwordRef = useRef(null);
 
-  const [credentials, setCredentials] = useState({
-    username: "",
-    password: "",
-  });
-
-  function handleLogin(event: any) {
-    event.preventDefault();
-    dispatch(loginUser(credentials));
-  }
-
-  const handleCategoryChange = (event: any) => {
+   const handleCategoryChange = (event: any) => {
     setCategory(event.target.value);
-  };
-
-  const handleFormChange = (event: any) => {
-    const { id, value } = event.target;
-    
-    setCredentials((prevState) => ({
-      ...prevState,
-      [id]: value,
-    }));
   };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    dispatch(loginUser(credentials));
+    dispatch(
+      loginUser({
+        username: (usernameRef.current as any).value,
+        password: (passwordRef.current as any).value,
+      })
+    );
   };
 
   // async function refreshOldToken(token: string) {
@@ -106,33 +78,41 @@ const Home = () => {
               <BarPlot category={category} />
             </Col>
             <Col className="p-0">
-              <StyledForm onSubmit={handleSubmit}>
-                <h6>Log in</h6>
-                <label>Username - Alice</label>
-                <input
-                  type="username"
-                  className="form-control"
-                  id="username"
-                  aria-describedby="usernameHelp"
-                  value={credentials.username}
-                  onChange={handleFormChange}
-                />
-                <br />
-
-                <label>Password</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="password"
-                  value={credentials.password}
-                  onChange={handleFormChange}
-                />
-              <div className="btn-submit">
-                <button className="btn btn-secondary" onClick={handleLogin}>
-                  Log in
-                </button>
-              </div>
-              </StyledForm>
+              <Form
+                className="m-3 p-3 align-items-center v-100 bg-transparent"
+                onSubmit={handleSubmit}
+                style={{
+                  maxWidth: "250px",
+                  borderRadius: "0.75rem",
+                  border: "2px solid white",
+                }}
+              >
+                <h6 className="text-center mb-3 font-weight-bold">Log In</h6>
+                <Form.Group id="email">
+                  <Form.Label>Username: Alice</Form.Label>
+                  <Form.Control
+                    type="username"
+                    ref={usernameRef}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group id="password">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    ref={passwordRef}
+                    required
+                  />
+                </Form.Group>
+                <div className="text-center">
+                  <button
+                    className="btn btn-secondary"
+                    type="submit"
+                  >
+                    Log In
+                  </button>
+                </div>
+              </Form>
             </Col>
           </>
         </Row>
