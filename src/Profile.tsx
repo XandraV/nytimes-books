@@ -21,11 +21,6 @@ interface RootState {
   };
 }
 
-const color = d3
-  .scaleLinear<string>()
-  .domain([0, 7, 15])
-  .range(["#FF94BD", "#C7E2FF", "#FFB846"]);
-
 const Profile = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -35,10 +30,16 @@ const Profile = () => {
   const [refreshToken] = useState(user.refreshToken || "");
   const books = useSelector((state: RootState) => state.usersBooks.books);
   const loading = useSelector((state: RootState) => state.usersBooks.loading);
+  const booksNum = books && books.length;
 
   useEffect(() => {
     dispatch(getUsersBooks(accessToken));
   }, [accessToken, dispatch]);
+  
+  const color = d3
+    .scaleLinear<string>()
+    .domain([1, Math.ceil(booksNum / 2), booksNum])
+    .range(["#FF94BD", "#C7E2FF", "#FFB846"]);
 
   async function logOut(token: string) {
     localStorage.removeItem("currentUser");
@@ -97,20 +98,23 @@ const Profile = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {books.map((book: any, idx) => (
-                    <tr
-                      className={`${idx}`}
-                      key={`${book.title + idx}`}
-                      style={{ backgroundColor: `${color(idx)}`}}
-                    >
-                      <td>{book.score}</td>
-                      <td>{book.author}</td>
-                      <td>
-                        {book.title.charAt(0) +
-                          book.title.slice(1).toLowerCase()}
-                      </td>
-                    </tr>
-                  ))}
+                  {books.map((book: any, index) => {
+                    const idx = index + 1;
+                    return (
+                      <tr
+                        className={`${idx}`}
+                        key={`${book.title + idx}`}
+                        style={{ backgroundColor: `${color(idx)}` }}
+                      >
+                        <td>{book.score}</td>
+                        <td>{book.author}</td>
+                        <td>
+                          {book.title.charAt(0) +
+                            book.title.slice(1).toLowerCase()}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </Table>
             </Col>

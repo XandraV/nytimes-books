@@ -21,8 +21,6 @@ const TypingEffect = `
   }
 `;
 const StyledPageWrapper = styled.div`
-width: 100wh;
-height: 100vh;
 background: ${({ theme }) => theme.backgroundColor};
 color: ${({ theme }) => theme.color};
 padding:2rem;

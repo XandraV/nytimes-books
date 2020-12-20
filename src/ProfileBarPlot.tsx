@@ -49,12 +49,13 @@ const Wrapper = styled.div`
 const ProfileBarPlot: FC<BarPlotProps> = ({ books }) => {
   const { theme } = useContext(ThemeContext);
   const booksNum = books.length;
-  const width = 600;
-  const height = 510;
+  const width = 500;
+  const height = 450;
   const innerRadiusRanking = 60;
   const outerRadiusRanking = 100;
   const innerRadiusWeeks = 110;
-  const outerRadiusWeeks = 160;
+  const outerRadiusWeeks = 150;
+  const maxScore = 10;
   const xScale = d3
     .scaleLinear()
     .domain([1, booksNum + 1])
@@ -64,18 +65,18 @@ const ProfileBarPlot: FC<BarPlotProps> = ({ books }) => {
 
   const yScaleRanking = d3
     .scaleLinear()
-    .domain([1, booksNum + 1])
-    .range([outerRadiusRanking, innerRadiusRanking]);
+    .domain([1, maxScore])
+    .range([innerRadiusRanking, outerRadiusRanking]);
 
   const yScaleWeeks = d3
     .scaleLinear()
-    .domain([0, booksNum + 1])
+    .domain([1, booksNum])
     .range([innerRadiusWeeks, outerRadiusWeeks]);
 
   const createArc = d3.arc().padAngle(0.05).cornerRadius(3);
   const color = d3
     .scaleLinear<string>()
-    .domain([0, 7, booksNum])
+    .domain([0, Math.ceil(booksNum/2), booksNum])
     .range(["#FF94BD", "#C7E2FF", "#FFB846"]);
 
   function splitSentence(sentence: string) {
@@ -95,8 +96,9 @@ const ProfileBarPlot: FC<BarPlotProps> = ({ books }) => {
         height={height}
         style={{ overflow: "visible", marginTop: "-1rem" }}
       >
-        {books.map((d: any, idx: number) => {
+        {books.map((d: any, index: number) => {
           const { first, second } = splitSentence(d.title);
+          let idx = index + 1;
           return (
             <OverlayTrigger
               key={`bookPlot${idx}`}
@@ -195,7 +197,7 @@ const ProfileBarPlot: FC<BarPlotProps> = ({ books }) => {
                 </g>
                 <g
                   transform={`translate(${height / 2} ${width / 2}) rotate(${
-                    175 + idx * (360 / booksNum) - 10
+                    170 + idx * (360 / booksNum) - 10
                   })`}
                 >
                   // rotate around the chart

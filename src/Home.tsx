@@ -7,7 +7,6 @@ import Logo from "./Logo";
 import BarPlot from "./BarPlot";
 import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { ThemeContext } from "./ThemeProvider";
-
 import DataVizDescription from "./DataVizDescription";
 
 interface RootState {

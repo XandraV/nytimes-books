@@ -2,7 +2,7 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import history from '../../history'
 
 export async function loginApi(credentials) {
-  return await fetch(`http://localhost:5000/login`, {
+  return await fetch(`https://nytimes-express-backend.herokuapp.com/login`, {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
