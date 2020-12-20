@@ -1,7 +1,7 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
-export async function getBooksApi(category) {
-  return await fetch(
+export function getBooksApi(category) {
+  return fetch(
     `${process.env.REACT_APP_NYTIMES_BASE_URL}/svc/books/v3/lists/current/${category}.json?api-key=${process.env.REACT_APP_NYTIMES_API_KEY}`
   )
     .then((response) => response.json())
