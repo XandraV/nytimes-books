@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import styled from "styled-components/macro";
+
 const TypingEffect = `
   width:0;
   overflow: hidden; /* Ensures the content is not revealed until the animation */
@@ -20,7 +21,9 @@ const TypingEffect = `
   }
 `;
 const StyledPageWrapper = styled.div`
-  margin: 2rem;
+background: ${({ theme }) => theme.backgroundColor};
+color: ${({ theme }) => theme.color};
+padding:2rem;
   .table {
     float: right;
   }
@@ -79,7 +82,7 @@ const StyledPageWrapper = styled.div`
  
 `;
 
-const PageWrapper: FC = ({ children }) => (
-  <StyledPageWrapper>{children}</StyledPageWrapper>
+const PageWrapper: FC<{ theme: any }> = ({ theme, children }) => (
+  <StyledPageWrapper theme={theme}>{children}</StyledPageWrapper>
 );
 export default PageWrapper;
